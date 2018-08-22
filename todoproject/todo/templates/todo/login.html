@@ -1,0 +1,14 @@
+{% extends 'todo/base.html' %}
+{% load rest_framework %}
+
+{% block content %}
+    <a href="{% url 'register' %}">Зарегистрироваться</a>
+
+    <h1>Вход</h1>
+        {{error}}
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            {% render_form serializer %}
+            <input type="submit" value="Войти">
+        </form>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'todo/base.html' %}
+{% load rest_framework %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+Здравствуйте, {{request.user}} <a href="{% url 'logout' %}">Выйти</a>
+         <form action="{% url 'addtodo' %}" method="POST">
+            {% csrf_token %}
+            {% render_form serializer.text %}
+            <input type="submit" value="add">
+         </form>
+        <br />
+        <br />
+        <a href="#"> <span class="category-{{ person_companies }}">{{ person_companies }} </span></a>
+        <div class="row t10">
+            <div class="col-lg-12">
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        <a href="{% url 'deletecomplete' %}"><button type="button" class="btn btn-warning">
+                            <i class="glyphicon glyphicon-trash"></i> DELETE COMPLETED
+                        </button></a>
+                    </div>
+                    <div class="btn-group">
+                        <a href="{% url 'deleteall' %}"><button type="button" class="btn btn-warning">
+                            <i class="glyphicon glyphicon-trash"></i> DELETE ALL
+                        </button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="list-group t20 taskItem">
+            {% for todo in current_todo_list %}
+                {% if todo.complete %}
+                <a href="{% url 'decomplete' todo.id%}"><li class="list-group-item todo-completed">{{ todo.text }}</li></a>
+                {% else %}
+                <a href="{% url 'complete' todo.id%}"><li class="list-group-item">{{ todo.text }}</li></a>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <br />
+        <br />
+
+
+{% else %}
+ Здравствуйте, Гость. <a href="{% url 'login' %}">Войти</a>  <a href="{% url 'register' %}">Зарегистрироваться</a>
+{% endif %}
+
+{% endblock %}

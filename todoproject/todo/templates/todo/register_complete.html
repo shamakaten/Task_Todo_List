@@ -1,0 +1,13 @@
+{% extends 'todo/base.html' %}
+
+{% block content %}
+
+<h4>Пользователь, {{user}} зарегистрирован</h4>
+
+<span>Компания:  {{company}}</span>
+<br />
+<span>Пароль: {{password}}</span>
+<br />
+<a href="{% url 'login' %}">Войти</a> <br />
+<a href="{% url 'register' %}">Зарегистрироваться</a>
+{% endblock %}
